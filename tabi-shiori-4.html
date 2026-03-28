@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>🌊 鳥羽・鈴鹿 家族旅行のしおり</title>
+<link href="https://fonts.googleapis.com/css2?family=Kaisei+Decol:wght@400;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:   #0A1C38;
+  --ocean:  #1B5299;
+  --sky:    #2B7FD4;
+  --aqua:   #00B4D8;
+  --coral:  #FF6B47;
+  --amber:  #F4A261;
+  --gold:   #E9C46A;
+  --mint:   #52B788;
+  --lilac:  #9B72CF;
+  --sand:   #FFF8F0;
+  --white:  #FFFFFF;
+  --text:   #1A2B3C;
+  --muted:  #6B7C93;
+  --radius: 20px;
+  --shadow: 0 8px 32px rgba(10,28,56,0.13);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  background: #F0F4FA;
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: 60px;
+  max-width: 430px;
+  margin: 0 auto;
+}
+
+/* ===== HERO ===== */
+.hero {
+  position: relative;
+  height: 320px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #0A2550 0%, #0D3B7A 35%, #1565C0 65%, #0077A8 100%);
+}
+.hero-bg::after {
+  content: '🌊';
+  position: absolute;
+  font-size: 14rem;
+  right: -20px; bottom: -20px;
+  opacity: 0.08;
+  line-height: 1;
+  pointer-events: none;
+  transform: rotate(-15deg);
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(5,15,35,.15) 0%, rgba(5,15,35,.35) 40%, rgba(5,15,35,.85) 100%);
+}
+.hero-waves {
+  position: absolute; bottom:0; left:0; right:0; height:55px; overflow:hidden;
+}
+.hero-waves svg { width:100%; height:100%; }
+.hero-content { position:relative; z-index:2; padding: 0 22px 26px; }
+.hero-eyebrow { font-size:.7rem; color:rgba(255,255,255,.75); letter-spacing:.15em; text-transform:uppercase; margin-bottom:5px; }
+.hero-title {
+  font-family:'Kaisei Decol',serif; font-size:1.85rem; font-weight:700; color:white;
+  line-height:1.2; text-shadow:0 2px 16px rgba(0,0,0,.4); margin-bottom:10px;
+}
+.hero-date { font-size:.81rem; color:rgba(255,255,255,.88); margin-bottom:13px; }
+.hero-stats { display:flex; gap:7px; flex-wrap:wrap; }
+.hero-chip {
+  background:rgba(255,255,255,.2); backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.35); border-radius:20px;
+  padding:5px 12px; font-size:.73rem; color:white; font-weight:500;
+}
+
+/* ===== QUICK NAV ===== */
+.quick-nav {
+  position:sticky; top:0; z-index:100;
+  background:rgba(240,244,250,.95); backdrop-filter:blur(10px);
+  padding:9px 14px; display:flex; gap:7px;
+  border-bottom:1px solid rgba(27,82,153,.1);
+  overflow-x:auto; scrollbar-width:none;
+}
+.quick-nav::-webkit-scrollbar { display:none; }
+.nav-btn {
+  flex-shrink:0; background:white; border:1.5px solid #d5e2f5;
+  border-radius:20px; padding:6px 14px; font-size:.73rem; font-weight:700;
+  color:var(--ocean); cursor:pointer; font-family:inherit;
+  text-decoration:none; display:inline-block; transition:all .2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.nav-btn.active { background:var(--sky); color:white; border-color:var(--sky); }
+
+/* ===== DAY HEADER ===== */
+.day-section { margin-top:6px; }
+.day-header { display:flex; align-items:center; gap:10px; padding:20px 18px 10px; }
+.day-pill {
+  background:linear-gradient(135deg,var(--ocean),var(--sky));
+  color:white; font-size:.72rem; font-weight:700;
+  padding:4px 12px; border-radius:20px; letter-spacing:.05em;
+}
+.day-pill.d2  { background:linear-gradient(135deg,#C84B31,#E8735A); }
+.day-pill.dbaby { background:linear-gradient(135deg,#C84B8A,#E87AB8); }
+.day-pill.dgreen { background:linear-gradient(135deg,#2A7A48,#52B788); }
+.day-label { font-family:'Kaisei Decol',serif; font-size:1.05rem; font-weight:700; color:var(--ocean); }
+.day-label.d2    { color:#C84B31; }
+.day-label.dbaby { color:#B5154F; }
+.day-label.dgreen { color:#2A7A48; }
+
+/* ===== TIMELINE ===== */
+.timeline { padding:0 14px; display:flex; flex-direction:column; gap:11px; position:relative; }
+.timeline::before {
+  content:''; position:absolute; left:30px; top:10px; bottom:10px; width:2px;
+  background:linear-gradient(to bottom,var(--aqua),var(--mint),#d0e8d8); border-radius:2px;
+}
+
+/* ===== CARD ===== */
+.card {
+  background:white; border-radius:var(--radius);
+  box-shadow:var(--shadow); overflow:hidden;
+  position:relative; margin-left:20px;
+}
+.card::before {
+  content:''; position:absolute; left:-23px; top:22px;
+  width:10px; height:10px; border-radius:50%;
+  background:var(--aqua); border:2px solid white;
+  box-shadow:0 0 0 3px var(--aqua); z-index:1;
+}
+.card.travel::before { background:#A0B4C8; box-shadow:0 0 0 3px #A0B4C8; }
+.card.meal::before   { background:var(--amber); box-shadow:0 0 0 3px var(--amber); }
+.card.hotel::before  { background:var(--lilac); box-shadow:0 0 0 3px var(--lilac); }
+
+/* Photo header */
+.card-photo {
+  height:160px; position:relative; overflow:hidden;
+  background-color:#1a3a5c; cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.card-photo.sm { height:130px; }
+.card-photo-bg {
+  position:absolute; inset:0; background-size:cover; background-position:center;
+  transition:transform .4s;
+}
+.card.open .card-photo-bg { transform:scale(1.05); }
+.card-photo-ov {
+  position:absolute; inset:0;
+  background:linear-gradient(160deg,rgba(0,0,0,.1) 0%,rgba(0,0,0,.58) 100%);
+}
+.card-photo-content {
+  position:absolute; bottom:0; left:0; right:0; padding:12px 15px 11px;
+}
+.card-photo-time {
+  display:inline-block; background:rgba(255,255,255,.2); backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.4); border-radius:12px;
+  color:white; font-size:.69rem; font-weight:700; padding:3px 10px;
+  margin-bottom:4px; letter-spacing:.04em;
+}
+.card-photo-name {
+  font-family:'Kaisei Decol',serif; font-size:1.12rem; font-weight:700;
+  color:white; text-shadow:0 1px 8px rgba(0,0,0,.5); line-height:1.25;
+}
+.card-photo-sub { font-size:.71rem; color:rgba(255,255,255,.82); margin-top:2px; }
+.card-photo-chev {
+  position:absolute; right:13px; bottom:13px;
+  width:26px; height:26px; background:rgba(255,255,255,.25);
+  backdrop-filter:blur(4px); border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:white; font-size:.68rem; transition:transform .3s;
+}
+.card.open .card-photo-chev { transform:rotate(180deg); }
+
+/* Simple header */
+.card-simple {
+  display:flex; align-items:center; gap:10px; padding:13px 14px;
+  cursor:pointer; background:#FAFCFF;
+  -webkit-tap-highlight-color:transparent;
+}
+.card.open .card-simple { background:#f0f6ff; }
+.time-chip {
+  font-size:.68rem; font-weight:700; padding:3px 9px; border-radius:10px;
+  white-space:nowrap; flex-shrink:0; color:white;
+  background:linear-gradient(135deg,var(--sky),var(--aqua));
+}
+.card.travel .time-chip { background:linear-gradient(135deg,#7A95B0,#A0B4C8); }
+.card.meal   .time-chip { background:linear-gradient(135deg,var(--amber),var(--gold)); color:#4a2800; }
+.card.hotel  .time-chip { background:linear-gradient(135deg,var(--lilac),#C4A8E8); }
+.card-simple-icon { font-size:1.4rem; flex-shrink:0; }
+.card-simple-info { flex:1; }
+.card-simple-name { font-weight:700; font-size:.91rem; }
+.card-simple-sub  { font-size:.71rem; color:var(--muted); margin-top:1px; }
+.card-chev { color:#bbb; font-size:.8rem; transition:transform .3s; }
+.card.open .card-chev { transform:rotate(180deg); }
+
+/* Detail body */
+.card-body { max-height:0; overflow:hidden; transition:max-height .42s cubic-bezier(.4,0,.2,1); }
+.card.open .card-body { max-height:1600px; }
+.card-body-inner { padding:13px 16px 17px; }
+
+/* Info rows */
+.info-row {
+  display:flex; gap:8px; padding:6px 0;
+  border-bottom:1px solid #EEF3FB; font-size:.81rem; line-height:1.5; align-items:flex-start;
+}
+.info-row:last-child { border-bottom:none; }
+.info-icon { flex-shrink:0; width:20px; text-align:center; }
+.info-text { flex:1; color:#444; }
+.info-link { color:var(--sky); text-decoration:none; font-weight:500; word-break:break-all; }
+.tel-link  { color:var(--coral); font-weight:700; text-decoration:none; font-size:1rem; }
+
+/* Highlights */
+.hl-title { font-size:.73rem; font-weight:700; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; margin:12px 0 7px; }
+.highlights { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+.hl {
+  background:linear-gradient(135deg,#F0F7FF,#E8F4FF);
+  border:1px solid #D0E4F7; border-radius:12px;
+  padding:8px 10px; font-size:.75rem; line-height:1.45; color:var(--text);
+}
+.hl b { color:var(--ocean); font-weight:700; display:block; margin-bottom:1px; }
+.hl.warn { background:linear-gradient(135deg,#FFF5F0,#FFF0EA); border-color:#FFD4BC; }
+.hl.warn b { color:var(--coral); }
+
+/* Notes */
+.note {
+  font-size:.79rem; line-height:1.6; padding:9px 12px;
+  border-radius:0 12px 12px 0; border-left:3px solid var(--gold);
+  background:linear-gradient(135deg,#FFFDE8,#FFF9DC); color:#6B5200; margin-top:8px;
+}
+.note.info {
+  border-left-color:var(--aqua);
+  background:linear-gradient(135deg,#E8F7FF,#DFF4FF); color:#004E72;
+}
+.note strong { font-weight:700; }
+
+/* ===== DIAPER ===== */
+.section-block { margin:0 14px; background:white; border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; }
+.section-block-body { padding:12px 14px 16px; }
+.diaper-list { display:flex; flex-direction:column; gap:8px; }
+.diaper-item {
+  background:#F8FBFF; border:1px solid #E0EDFF; border-radius:12px;
+  padding:10px 13px; display:flex; align-items:flex-start; gap:10px;
+}
+.diaper-ico { font-size:1.4rem; flex-shrink:0; margin-top:1px; }
+.diaper-info { flex:1; }
+.diaper-place { font-weight:700; font-size:.84rem; }
+.diaper-addr  { font-size:.73rem; color:var(--muted); margin-top:1px; }
+.diaper-tags  { display:flex; gap:4px; margin-top:5px; flex-wrap:wrap; }
+.dtag { font-size:.68rem; padding:2px 8px; border-radius:8px; font-weight:700; }
+.dtag-ok    { background:#E6F4EC; color:#2A7A48; }
+.dtag-nurse { background:#FDE8F0; color:#B5154F; }
+
+/* ===== CHECKLIST ===== */
+.check-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+.check-item {
+  display:flex; align-items:center; gap:8px;
+  background:#F8FBFF; border:1.5px solid #E0EDFF; border-radius:10px;
+  padding:8px 10px; cursor:pointer; font-size:.78rem; color:var(--text);
+  transition:all .2s; -webkit-tap-highlight-color:transparent; user-select:none;
+}
+.check-item.checked { background:#E8F5EE; border-color:#7CC49A; color:#2E7D52; text-decoration:line-through; opacity:.75; }
+.check-box {
+  width:18px; height:18px; border:2px solid #C0D4EE; border-radius:5px;
+  flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  font-size:.7rem; background:white; transition:all .2s;
+}
+.check-item.checked .check-box { background:#52B788; border-color:#52B788; color:white; }
+
+/* ===== FOOTER ===== */
+.footer { text-align:center; padding:28px 20px 16px; color:var(--muted); font-size:.74rem; }
+.footer-emoji { font-size:1.4rem; display:block; margin-bottom:6px; }
+
+/* ===== FADE IN ===== */
+.fade-in { opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease; }
+.fade-in.visible { opacity:1; transform:none; }
+
+/* ===== PHOTO THEMES — CSS gradient only, no external images ===== */
+
+/* 共通：デコ絵文字レイヤー */
+.card-photo-bg {
+  position:absolute; inset:0; background-size:cover; background-position:center;
+  transition:transform .4s;
+  display:flex; align-items:center; justify-content:center;
+  font-size: 7rem; opacity:1; user-select:none; pointer-events:none;
+  filter: blur(0px);
+}
+.card-photo-bg::after {
+  content: attr(data-emoji);
+  font-size: 7rem;
+  opacity: 0.18;
+  position: absolute;
+  right: 10px; bottom: -10px;
+  line-height: 1;
+  transform: rotate(-10deg);
+}
+.card.open .card-photo-bg { transform:scale(1.05); }
+
+/* 天びん屋：温かい海鮮オレンジ */
+.pt-tenbinya .card-photo-bg {
+  background: linear-gradient(135deg, #7B3410 0%, #C05A20 45%, #E8892A 100%);
+}
+.pt-tenbinya .card-photo-ov {
+  background: linear-gradient(160deg, rgba(80,30,0,.1), rgba(60,20,0,.55));
+}
+
+/* 鳥羽水族館：深海ブルー */
+.pt-aquarium .card-photo-bg {
+  background: linear-gradient(135deg, #012A5E 0%, #023E8A 40%, #0077B6 75%, #00B4D8 100%);
+}
+.pt-aquarium .card-photo-ov {
+  background: linear-gradient(160deg, rgba(0,20,70,.1), rgba(0,15,50,.55));
+}
+
+/* エクシブ鳥羽：リッチパープル */
+.pt-hotel .card-photo-bg {
+  background: linear-gradient(135deg, #1A0840 0%, #2D1B69 45%, #4A2D8A 75%, #6B4FA0 100%);
+}
+.pt-hotel .card-photo-ov {
+  background: linear-gradient(160deg, rgba(20,5,60,.1), rgba(15,5,50,.55));
+}
+
+/* 夕食：深みのあるバーガンディ */
+.pt-dinner .card-photo-bg {
+  background: linear-gradient(135deg, #2C0A0A 0%, #5C1A10 45%, #8B2E18 75%, #C04A25 100%);
+}
+.pt-dinner .card-photo-ov {
+  background: linear-gradient(160deg, rgba(50,10,0,.15), rgba(40,8,0,.6));
+}
+
+/* お風呂：和の深緑 */
+.pt-onsen .card-photo-bg {
+  background: linear-gradient(135deg, #0A2020 0%, #1A4040 45%, #255C5C 75%, #2E7070 100%);
+}
+.pt-onsen .card-photo-ov {
+  background: linear-gradient(160deg, rgba(0,25,25,.1), rgba(0,20,20,.55));
+}
+
+/* 朝食：朝焼けオレンジ */
+.pt-breakfast .card-photo-bg {
+  background: linear-gradient(135deg, #3D1F00 0%, #7A3D00 40%, #C4740A 75%, #E8A030 100%);
+}
+.pt-breakfast .card-photo-ov {
+  background: linear-gradient(160deg, rgba(60,30,0,.1), rgba(50,20,0,.55));
+}
+
+/* 鈴鹿サーキット：レーシングレッド */
+.pt-circuit .card-photo-bg {
+  background: linear-gradient(135deg, #0A0A0A 0%, #280808 35%, #5C1010 65%, #8B1A1A 100%);
+}
+.pt-circuit .card-photo-ov {
+  background: linear-gradient(160deg, rgba(150,10,0,.2), rgba(10,0,0,.65));
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-waves">
+    <svg viewBox="0 0 430 55" preserveAspectRatio="none" fill="#F0F4FA">
+      <path d="M0,28 C80,56 160,0 240,28 C320,56 385,8 430,28 L430,55 L0,55 Z"/>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Trip Itinerary 2026</div>
+    <h1 class="hero-title">鳥羽・鈴鹿<br>家族旅行のしおり</h1>
+    <div class="hero-date">📅 2026年3月29日（日）〜 30日（月）　1泊2日</div>
+    <div class="hero-stats">
+      <span class="hero-chip">👨‍👩‍👧‍👦 大人 4名</span>
+      <span class="hero-chip">👧 小学生 2名</span>
+      <span class="hero-chip">🧒 4歳・1歳</span>
+      <span class="hero-chip">🚗 マイカー</span>
+    </div>
+  </div>
+</div>
+
+<!-- QUICK NAV -->
+<nav class="quick-nav">
+  <a class="nav-btn active" href="#day1">DAY 1</a>
+  <a class="nav-btn" href="#day2">DAY 2</a>
+  <a class="nav-btn" href="#diaper">👶 おむつ</a>
+  <a class="nav-btn" href="#checklist">🎒 持ち物</a>
+</nav>
+
+<!-- ===== DAY 1 ===== -->
+<div class="day-section" id="day1">
+  <div class="day-header">
+    <span class="day-pill">DAY 1</span>
+    <span class="day-label">3月29日（日）☀️ 出発の日</span>
+  </div>
+
+  <div class="timeline">
+
+    <!-- 出発 -->
+    <div class="card travel fade-in" onclick="toggle(this)">
+      <div class="card-simple">
+        <span class="time-chip">08:00</span>
+        <span class="card-simple-icon">🚗</span>
+        <div class="card-simple-info">
+          <div class="card-simple-name">六甲アイランド 出発</div>
+          <div class="card-simple-sub">車で約3時間半（休憩込み）</div>
+        </div>
+        <span class="card-chev">▼</span>
+      </div>
+      <div class="card-body"><div class="card-body-inner">
+        <div class="info-row"><span class="info-icon">🛣️</span><span class="info-text">阪神高速 → 名神 → 東名阪経由。高速SAでおむつ替えも確認してから出発！</span></div>
+        <div class="note">⏱️ 予定より早く着いても観光時間が増えるだけ。焦らずゆっくり行こう！</div>
+      </div></div>
+    </div>
+
+    <!-- 天びん屋 -->
+    <div class="card meal pt-tenbinya fade-in" onclick="toggle(this)">
+      <div class="card-photo">
+        <div class="card-photo-bg" data-emoji="🐟"></div><div class="card-photo-ov"></div>
+        <div class="card-photo-content">
+          <div class="card-photo-time">🐟 11:30 ランチ</div>
+          <div class="card-photo-name">天びん屋 本店</div>
+          <div class="card-photo-sub">鳥羽を代表する老舗海鮮処</div>
+        </div>
+        <div class="card-photo-chev">▼</div>
+      </div>
+      <div class="card-body"><div class="card-body-inner">
+        <div class="info-row"><span class="info-icon">📍</span><span class="info-text"><a class="info-link" href="https://maps.google.com/?q=三重県鳥羽市鳥羽1丁目4-61+天びん屋本店" target="_blank">〒517-0011 三重県鳥羽市鳥羽1丁目4-61 🗺️</a></span></div>
+        <div class="info-row"><span class="info-icon">📞</span><span class="info-text"><a class="tel-link" href="tel:0599-25-2223">0599-25-2223</a></span></div>
+        <div class="info-row"><span class="info-icon">🕐</span><span class="info-text">11:30〜14:00（L.O.）／17:00〜21:30　定休：月曜</span></div>
+        <div class="info-row"><span class="info-icon">🌐</span><span class="info-text"><a class="info-link" href="https://www.tenbinya.co.jp/" target="_blank">tenbinya.co.jp</a></span></div>
+        <div class="hl-title">✨ おすすめメニュー</div>
+        <div class="highlights">
+          <div class="hl"><b>🍜 伊勢うどん</b>鳥羽名物のふわふわ食感</div>
+          <div class="hl"><b>🍱 てこね寿し</b>漁師めし発祥の郷土料理</div>
+          <div class="hl"><b>🪣 海女の釜めし</b>当店一押しの人気メニュー</div>
+          <div class="hl"><b>🐟 刺身丼</b>6種ネタ＋うに&いくら</div>
+        </div>
+        <div class="note">🍱 2階に個室あり（2〜40名）。子連れでゆっくり食べられる！事前電話予約がおすすめ。</div>
+        <div class="note info">🚼 近くのおむつ替え：鳥羽1番街1F・鳥羽マリンターミナル1F（授乳室あり）</div>
+      </div></div>
+    </div>
+
+    <!-- 鳥羽水族館 -->
+    <div class="card pt-aquarium fade-in" onclick="toggle(this)">
+      <div class="card-photo">
+        <div class="card-photo-bg" data-emoji="🦭"></div><div class="card-photo-ov"></div>
+        <div class="card-photo-content">
+          <div class="card-photo-time">🦭 13:30〜16:00</div>
+          <div class="card-photo-name">鳥羽水族館</div>
+          <div class="card-photo-sub">日本一の飼育種類数 約1,200種</div>
+        </div>
+        <div class="card-photo-chev">▼</div>
+      </div>
+      <div class="card-body"><div class="card-body-inner">
+        <div class="info-row"><span class="info-icon">📍</span><span class="info-text"><a class="info-link" href="https://maps.google.com/?q=三重県鳥羽市鳥羽3-3-6+鳥羽水族館" target="_blank">〒517-8517 三重県鳥羽市鳥羽3-3-6 🗺️</a></span></div>
+        <div class="info-row"><span class="info-icon">📞</span><span class="info-text"><a class="tel-link" href="tel:0599-25-2555">0599-25-2555</a></span></div>
+        <div class="info-row"><span class="info-icon">🕐</span><span class="info-text">9:30〜17:00（最終入館16:00）年中無休</span></div>
+        <div class="info-row"><span class="info-icon">💴</span><span class="info-text">大人 2,800円 / 小中生 1,600円 / 3歳〜 800円</span></div>
+        <div class="info-row"><span class="info-icon">🌐</span><span class="info-text"><a class="info-link" href="https://aquarium.co.jp/" target="_blank">aquarium.co.jp</a></span></div>
+        <div class="hl-title">🌟 見どころ</div>
+        <div class="highlights">
+          <div class="hl"><b>🦦 ラッコのお食事タイム</b>メイ&キラちゃん。1日3回。20分前には場所取りを！</div>
+          <div class="hl"><b>🧜 ジュゴン（日本唯一！）</b>人魚伝説のモデル。必見！</div>
+          <div class="hl"><b>🎪 アシカショー</b>ジャンプ・逆立ち・フリスビーと大迫力！</div>
+          <div class="hl"><b>🐧 ペンギン散歩</b>館内をよちよちお散歩する可愛いイベント</div>
+          <div class="hl"><b>🦭 海獣の王国</b>アシカ・アザラシを間近で観察</div>
+          <div class="hl"><b>🌊 サンゴ礁水槽</b>ターコイズブルーの幻想的な展示</div>
+        </div>
+        <div class="note">💡 順路なし・自由見学。ショーの時間に合わせてルートを組もう！ベビーカー無料貸出あり。</div>
+        <div class="note info">🚼 <strong>館内2Fにおむつ替え台・授乳室あり！</strong></div>
+      </div></div>
+    </div>
+
+    <!-- 移動 -->
+    <div class="card travel fade-in" onclick="toggle(this)">
+      <div class="card-simple">
+        <span class="time-chip">16:00頃</span>
+        <span class="card-simple-icon">🚗</span>
+        <div class="card-simple-info">
+          <div class="card-simple-name">水族館出発 → エクシブ鳥羽へ</div>
+          <div class="card-simple-sub">車で約20分</div>
+        </div>
+        <span class="card-chev">▼</span>
+      </div>
+      <div class="card-body"><div class="card-body-inner">
+        <div class="note">🕔 夕食が17:00からなので、16:00頃には水族館を出発しよう！</div>
+      </div></div>
+    </div>
+
+    <!-- チェックイン -->
+    <div class="card hotel pt-hotel fade-in" onclick="toggle(this)">
+      <div class="card-photo">
+        <div class="card-photo-bg" data-emoji="🏨"></div><div class="card-photo-ov"></div>
+        <div class="card-photo-content">
+          <div class="card-photo-time">🏨 16:20頃 チェックイン</div>
+          <div class="card-photo-name">エクシブ鳥羽 本館</div>
+          <div class="card-photo-sub">鳥羽湾を望む会員制リゾートホテル</div>
+        </div>
+        <div class="card-photo-chev">▼</div>
+      </div>
+      <div class="card-body"><div class="card-body-inner">
+        <div class="info-row"><span class="info-icon">📍</span><span class="info-text"><a class="info-link" href="https://maps.google.com/?ll=34.4572,136.8673&q=エクシブ鳥羽&z=17" target="_blank">〒517-0021 三重県鳥羽市安楽島町字二地169-2 🗺️</a></span></div>
+        <div class="info-row"><span class="info-icon">📞</span><span class="info-text"><a class="tel-link" href="tel:0599-26-4411">0599-26-4411</a></span></div>
+        <div class="info-row"><span class="info-icon">🌐</span><span class="info-text"><a class="info-link" href="https://www.rtg.jp/hotels/xiv/toba/" target="_blank">rtg.jp/hotels/xiv/toba/</a></span></div>
+        <div class="note">🏨 チェックイン後すぐ夕食へ。翌朝の朝食（8:00〜）の確認もチェックイン時に！</div>
+        <div class="note info">🚼 ホテル内トイレにおむつ替え台あり（スタッフへ確認）</div>
+      </div></div>
+    </div>
+
+    <!-- 夕食 -->
+    <div class="card meal pt-dinner fade-in" onclick="toggle(this)">
+      <div class="card-photo class sm">
+        <div class="card-photo-bg" data-emoji="🍽️"></div><div class="card-photo-ov"></div>
+        <div class="card-photo-content">
+          <div class="card-photo-time">🍽️ 17:00 夕食</div>
+          <div class="card-photo-name">ホテル内レストランで夕食</div>
+          <div class="card-photo-sub">伊勢志摩の海の幸を堪能</div>
+        </div>
+        <div class="card-photo-chev">▼</div>
+      </div>
+      <div class="card-body"><div class="card-body-inner">
+        <div class="note">🌙 ゆっくりと海の幸を楽しみましょう！子ども用メニューの有無はチェックイン時に確認しよう。</div>
+      </div></div>
+    </div>
+
+    <!-- お風呂 -->
+    <div class="card hotel pt-onsen fade-in" onclick="toggle(this)">
+      <div class="card-photo sm">
+        <div class="card-photo-bg" data-emoji="♨️"></div><div class="card-photo-ov"></div>
+        <div class="card-photo-content">
+          <div class="card-photo-time">♨️ 夕食後</div>
+          <div class="card-photo-name">お風呂・天然温泉</div>
+          <div class="card-photo-sub">旅の疲れをゆっくり癒そう</div>
+        </div>
+        <div class="card-photo-chev">▼</div>
+      </div>
+      <div class="card-body"><div class="card-body-inner">
+        <div class="note">🛁 エクシブ鳥羽は天然温泉あり。明日の鈴鹿に向けてしっかり休もう！</div>
+      </div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== DAY 2 ===== -->
+<div class="day-section" id="day2" style="margin-top:14px;">
+  <div class="day-header">
+    <span class="day-pill d2">DAY 2</span>
+    <span class="day-label d2">3月30日（月）🏎️ 鈴鹿で遊ぶ日</span>
+  </div>
+
+  <div class="timeline">
+
+    <!-- 朝食 -->
+    <div class="card meal pt-breakfast fade-in" onclick="toggle(this)">
+      <div class="card-photo sm">
+        <div class="card-photo-bg" data-emoji="🌅"></div><div class="card-photo-ov"></div>
+        <div class="card-photo-content">
+          <div class="card-photo-time">🌅 08:00 朝食</div>
+          <div class="card-photo-name">朝食（ホテル内）</div>
+          <div class="card-photo-sub">しっかり食べて鈴鹿へ！</div>
+        </div>
+        <div class="card-photo-chev">▼</div>
+      </div>
+      <div class="card-body"><div class="card-body-inner">
+        <div class="note">☀️ しっかり朝ごはんを食べて鈴鹿サーキットで全力で遊ぼう！</div>
+      </div></div>
+    </div>
+
+    <!-- チェックアウト -->
+    <div class="card travel fade-in" onclick="toggle(this)">
+      <div class="card-simple">
+        <span class="time-chip">朝食後</span>
+        <span class="card-simple-icon">🚗</span>
+        <div class="card-simple-info">
+          <div class="card-simple-name">チェックアウト → 鈴鹿へ出発</div>
+          <div class="card-simple-sub">鳥羽から約1時間</div>
+        </div>
+        <span class="card-chev">▼</span>
+      </div>
+      <div class="card-body"><div class="card-body-inner">
+        <div class="info-row"><span class="info-icon">🚘</span><span class="info-text">伊勢道 → 東名阪経由。チェックアウト前にお忘れ物チェックを！</span></div>
+      </div></div>
+    </div>
+
+    <!-- 鈴鹿サーキット -->
+    <div class="card pt-circuit fade-in" onclick="toggle(this)">
+      <div class="card-photo">
+        <div class="card-photo-bg" data-emoji="🏎️"></div><div class="card-photo-ov"></div>
+        <div class="card-photo-content">
+          <div class="card-photo-time">🏎️ 午前〜 15:00解散</div>
+          <div class="card-photo-name">鈴鹿サーキットパーク</div>
+          <div class="card-photo-sub">モビリティの聖地で思いっきり遊ぼう！</div>
+        </div>
+        <div class="card-photo-chev">▼</div>
+      </div>
+      <div class="card-body"><div class="card-body-inner">
+        <div class="info-row"><span class="info-icon">📍</span><span class="info-text"><a class="info-link" href="https://maps.google.com/?ll=34.8440,136.5410&q=鈴鹿サーキット&z=16" target="_blank">〒510-0295 三重県鈴鹿市稲生町7992 🗺️</a></span></div>
+        <div class="info-row"><span class="info-icon">📞</span><span class="info-text"><a class="tel-link" href="tel:059-378-1111">059-378-1111</a>（代表）</span></div>
+        <div class="info-row"><span class="info-icon">🕐</span><span class="info-text">営業時間は公式サイトで要確認</span></div>
+        <div class="info-row"><span class="info-icon">🌐</span><span class="info-text"><a class="info-link" href="https://www.suzukacircuit.jp/park/" target="_blank">suzukacircuit.jp/park/</a></span></div>
+        <div class="hl-title">🌟 みんなのおすすめ</div>
+        <div class="highlights">
+          <div class="hl"><b>👶 ぶんぶんばちひろば</b>0〜3歳専用プレイエリア。入園料のみ！</div>
+          <div class="hl"><b>🚗 コチラドライビングスクール</b>（3歳〜）交通ルールがゲームで学べる！</div>
+          <div class="hl"><b>🚔 プッチパトロール</b>（3歳〜）警察官になりきって子猫を探せ！</div>
+          <div class="hl"><b>🏍️ GPレーサーズ</b>（小学生〜）日本初バイク型コースター！</div>
+          <div class="hl"><b>🎯 ライセンスカード</b>アトラクションをクリアして証明書ゲット！</div>
+          <div class="hl warn"><b>⚠️ F1 GP翌日（3/30）</b>混雑予想。早めに到着してアプリで待ち時間確認！</div>
+        </div>
+        <div class="note info">🚼 <strong>おむつ替え・授乳室が充実！</strong><br>①メインインフォメーションセンター（個室授乳室3室・電子レンジ）②プッチタウンストア前（授乳室3室）③ベビーセンター（離乳食スペース・ハイハイスペース）＋各所だれでもトイレにもおむつ台</div>
+        <div class="note">🍼 離乳食の温め用電子レンジあり。ベビーカー貸出600円。迷子バンドも用意あり！</div>
+      </div></div>
+    </div>
+
+    <!-- 解散 -->
+    <div class="card travel fade-in" onclick="toggle(this)">
+      <div class="card-simple">
+        <span class="time-chip">15:00</span>
+        <span class="card-simple-icon">👋</span>
+        <div class="card-simple-info">
+          <div class="card-simple-name">解散 → 六甲アイランドへ</div>
+          <div class="card-simple-sub">お疲れさまでした！約1.5〜2時間</div>
+        </div>
+        <span class="card-chev">▼</span>
+      </div>
+      <div class="card-body"><div class="card-body-inner">
+        <div class="note">🏠 鈴鹿から六甲アイランドまで約1時間半〜2時間。渋滞に注意。最後まで楽しい旅を！</div>
+      </div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== DIAPER ===== -->
+<div id="diaper" style="padding-top:18px;">
+  <div class="day-header">
+    <span class="day-pill dbaby">👶</span>
+    <span class="day-label dbaby">おむつ替えマップ</span>
+  </div>
+  <div class="section-block fade-in">
+    <div class="section-block-body">
+      <div class="diaper-list">
+        <div class="diaper-item">
+          <div class="diaper-ico">🐟</div>
+          <div class="diaper-info">
+            <div class="diaper-place">天びん屋近く：鳥羽1番街 1F</div>
+            <div class="diaper-addr">三重県鳥羽市鳥羽1丁目2383-13</div>
+            <div class="diaper-tags"><span class="dtag dtag-ok">おむつ台</span><span class="dtag dtag-nurse">授乳室</span></div>
+          </div>
+        </div>
+        <div class="diaper-item">
+          <div class="diaper-ico">⛵</div>
+          <div class="diaper-info">
+            <div class="diaper-place">天びん屋近く：鳥羽マリンターミナル 1F</div>
+            <div class="diaper-addr">三重県鳥羽市鳥羽1丁目2383-4</div>
+            <div class="diaper-tags"><span class="dtag dtag-ok">おむつ台</span><span class="dtag dtag-nurse">授乳室</span></div>
+          </div>
+        </div>
+        <div class="diaper-item">
+          <div class="diaper-ico">🦭</div>
+          <div class="diaper-info">
+            <div class="diaper-place">鳥羽水族館 2F</div>
+            <div class="diaper-addr">館内2階（入館後すぐアクセス可）</div>
+            <div class="diaper-tags"><span class="dtag dtag-ok">おむつ台</span><span class="dtag dtag-nurse">授乳室</span></div>
+          </div>
+        </div>
+        <div class="diaper-item">
+          <div class="diaper-ico">⭐</div>
+          <div class="diaper-info">
+            <div class="diaper-place">鈴鹿：ベビーセンター（最充実！）</div>
+            <div class="diaper-addr">おむつ台・着替え台・離乳食スペース・ハイハイスペース完備</div>
+            <div class="diaper-tags"><span class="dtag dtag-ok">おむつ台</span><span class="dtag dtag-nurse">授乳室×3</span></div>
+          </div>
+        </div>
+        <div class="diaper-item">
+          <div class="diaper-ico">🏎️</div>
+          <div class="diaper-info">
+            <div class="diaper-place">鈴鹿：メインインフォメーションセンター</div>
+            <div class="diaper-addr">個室授乳室3室・電子レンジ・調乳用お湯あり</div>
+            <div class="diaper-tags"><span class="dtag dtag-ok">おむつ台</span><span class="dtag dtag-nurse">授乳室×3</span></div>
+          </div>
+        </div>
+        <div class="diaper-item">
+          <div class="diaper-ico">🚻</div>
+          <div class="diaper-info">
+            <div class="diaper-place">鈴鹿：各所だれでもトイレ</div>
+            <div class="diaper-addr">メインゲート横・ライセンスセンター横・メインインフォ前など</div>
+            <div class="diaper-tags"><span class="dtag dtag-ok">おむつ台</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CHECKLIST ===== -->
+<div id="checklist" style="padding-top:18px;">
+  <div class="day-header">
+    <span class="day-pill dgreen">🎒</span>
+    <span class="day-label dgreen">持ち物チェックリスト</span>
+  </div>
+  <div class="section-block fade-in">
+    <div class="section-block-body">
+      <div class="check-grid">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>おむつ・おしりふき</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>着替え（多めに）</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>ビニール袋</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>抱っこひも</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>おもちゃ・絵本</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>離乳食・ミルク</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>水筒・マグ</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>お菓子・補食</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>保険証・診察券</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>常備薬・体温計</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>日焼け止め</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>レジャーシート</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>充電器・バッテリー</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>カメラ・思い出グッズ</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <span class="footer-emoji">🌊</span>
+  楽しい旅になりますように 🌸<br>
+  2026.3.29 - 3.30　鳥羽・鈴鹿家族旅行
+</div>
+
+<script>
+function toggle(card) {
+  const isOpen = card.classList.contains('open');
+  document.querySelectorAll('.card.open').forEach(c => c.classList.remove('open'));
+  if (!isOpen) card.classList.add('open');
+}
+function toggleCheck(item) {
+  item.classList.toggle('checked');
+  item.querySelector('.check-box').textContent = item.classList.contains('checked') ? '✓' : '';
+}
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+document.querySelectorAll('.fade-in').forEach((el, i) => {
+  el.style.transitionDelay = (i % 5 * 0.06) + 's';
+  obs.observe(el);
+});
+const navBtns = document.querySelectorAll('.nav-btn');
+navBtns.forEach(btn => btn.addEventListener('click', () => {
+  navBtns.forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}));
+</script>
+</body>
+</html>
